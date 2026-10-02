@@ -37,13 +37,7 @@ thuyen_1.onreadystatechange = function () {
             });
             const thuyen_3 = new XMLHttpRequest();
 
-            thuyen_3.open(
-                "GET",
-                "https://provinces.open-api.vn/api/v1/p/"
-                + xu.code
-                + "?depth=2"
-            );
-
+            thuyen_3.open("GET", "https://provinces.open-api.vn/api/v1/p/" + xu.code + "?depth=2");
             thuyen_3.onreadystatechange = function () {
                 if (thuyen_3.readyState === 4) {
                     if (thuyen_3.status === 200) {
@@ -55,7 +49,6 @@ thuyen_1.onreadystatechange = function () {
 
                         const districts =
                             xuChiTiet.districts;
-
                         console.table(
                             districts.map(function (x) {
                                 return {
@@ -66,17 +59,14 @@ thuyen_1.onreadystatechange = function () {
                         );
 
                     } else {
-                        console.log(
-                            "Thuyền 3 hỏng:",
-                            thuyen_3.status
-                        );
+                        console.log("Thuyền 3 hỏng:", thuyen_3.status);
                     }
                 }
             };
 
             thuyen_3.send();
         } else {
-            console.log("Chuyến hỏng, con dấu:", thuyen.status);
+            console.log("Chuyến hỏng, con dấu:", thuyen_1.status);
         }
     }
 };
@@ -94,31 +84,20 @@ thuyen_2.open(
 thuyen_2.onreadystatechange = function () {
     if (thuyen_2.readyState === 4) {
         if (thuyen_2.status === 200) {
-
             const ruong = JSON.parse(thuyen_2.responseText);
-
             const nganHang = ruong.data;
-
-            console.log(
-                "Tổng số ngân hàng:",
-                nganHang.length
-            );
-
+            console.log("Tổng số ngân hàng:", nganHang.length);
             const bangNganHang = nganHang.map(function (x) {
                 return {
                     shortName: x.shortName,
                     bin: x.bin
                 };
             });
-
             console.table(bangNganHang);
-
             const nganHangCuaToi = nganHang.find(function (x) {
                 return x.shortName === "BIDV";
             });
-
             console.log(nganHangCuaToi.name);
-
         } else {
             console.log("Chuyến hỏng, con dấu:", thuyen_2.status);
         }
